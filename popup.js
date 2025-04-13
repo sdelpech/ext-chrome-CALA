@@ -130,4 +130,43 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
   });
+
+  // Configuration des sons
+  const sounds = [
+    { id: 'sound-1', file: 'sounds/sound1.mp3' },
+    { id: 'sound-2', file: 'sounds/sound2.wav' },
+    { id: 'sound-3', file: 'sounds/sound3.wav' },
+    { id: 'sound-4', file: 'sounds/sound4.mp3' },
+    { id: 'sound-5', file: 'sounds/sound5.mp3' }
+  ];
+
+  // Création des instances Audio
+  const audioPlayers = sounds.map(sound => {
+    const audio = new Audio(sound.file);
+    const button = document.getElementById(sound.id);
+    
+    button.addEventListener('click', () => {
+      // Arrêter le son s'il est en cours de lecture
+      if (!audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-outline-primary');
+        return;
+      }
+
+      // Jouer le son
+      audio.play();
+      button.classList.remove('btn-outline-primary');
+      button.classList.add('btn-primary');
+
+      // Remettre le bouton dans son état initial à la fin de la lecture
+      audio.onended = () => {
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-outline-primary');
+      };
+    });
+
+    return audio;
+  });
 });

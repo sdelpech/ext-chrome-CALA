@@ -1,7 +1,8 @@
 body {
   font-family: 'Poetsen One', Arial, sans-serif;
   margin: 10px;
-  width: 350px;
+  width: 400px;
+  padding :30px;
 }
 
 .volume-fader {
