@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChromeDJ</title>
+  <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+</head>
+<body>
+  <img src="logo.png" alt="ChromeDJ Logo" id="logo">
+  <h1></h1>
+  <div id="label-container" style="display: flex; justify-content: space-between;">
+    <div id="group-a-label">En attente du disque A</div>
+    <div id="group-b-label">En attente du disque B</div>
+  </div>
+  <div id="faders-container">
+  </div>
+  <div id="general-volume-container">
+    <label for="general-volume-fader"><h1>Volume Général :</h1></label>
+    <input id="general-volume-fader" type="range" min="0" max="100" value="100" class="volume-fader">
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

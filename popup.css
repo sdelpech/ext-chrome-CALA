@@ -1,0 +1,56 @@
+body {
+  font-family: 'Poetsen One', Arial, sans-serif;
+  margin: 10px;
+  width: 350px;
+}
+
+.volume-fader {
+  width: 100%;
+  margin: 10px 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 15px;
+}
+
+h1 {
+  font-family: 'Poetsen One', Arial, sans-serif;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+#faders-container {
+  text-align: center;
+  font-weight: bold;
+  width:100%;
+}
+
+#label-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    size : 32px;
+}
+
+#group-a-label, #group-b-label {
+  width: 45%;
+  text-align: center;
+  font-weight: bold;
+}
+
+#general-volume-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#general-volume-fader {
+  width: 100%;
+}
+
+#logo {
+  display: block;
+  margin: 0 auto 30px;
+  width: 200px;
+  height: 2auto;
+}
