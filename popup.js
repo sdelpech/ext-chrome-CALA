@@ -1,4 +1,60 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  // Gestion du bouton de vue fractionnée
+  const splitViewBtn = document.getElementById("split-view-btn");
+  if (splitViewBtn) {
+    splitViewBtn.addEventListener("click", async () => {
+      try {
+        // Obtenir la résolution native de l'écran
+        const displays = await chrome.system.display.getInfo();
+        
+        if (displays.length === 0) {
+          console.error("Aucun écran détecté");
+          return;
+        }
+        
+        // Utiliser le premier écran (écran principal)
+        const primaryDisplay = displays[0];
+        const screenWidth = primaryDisplay.workArea.width;
+        const screenHeight = primaryDisplay.workArea.height;
+        const screenLeft = primaryDisplay.workArea.left;
+        const screenTop = primaryDisplay.workArea.top;
+        
+        // Calculer 50% de la largeur
+        const halfWidth = Math.floor(screenWidth / 2);
+        
+        console.log(`Résolution détectée: ${screenWidth}x${screenHeight}`);
+        console.log(`Chaque fenêtre: ${halfWidth}x${screenHeight}`);
+        
+        // Créer la première fenêtre YouTube à gauche
+        chrome.windows.create({
+          url: 'https://www.youtube.com',
+          type: 'normal',
+          width: halfWidth,
+          height: screenHeight,
+          left: screenLeft,
+          top: screenTop,
+          state: 'normal'
+        });
+
+        // Créer la deuxième fenêtre YouTube à droite avec un délai
+        setTimeout(() => {
+          chrome.windows.create({
+            url: 'https://www.youtube.com',
+            type: 'normal',
+            width: halfWidth,
+            height: screenHeight,
+            left: screenLeft + halfWidth,
+            top: screenTop,
+            state: 'normal'
+          });
+        }, 500);
+
+      } catch (error) {
+        console.error("Erreur lors de la création de la vue fractionnée:", error);
+      }
+    });
+  }
+
   const containerA = document.getElementById("group-a-label");
   const containerB = document.getElementById("group-b-label");
 
@@ -50,8 +106,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   container.appendChild(crossfaderLabel);
 
   crossfader.addEventListener("input", () => {
-    const groupAVolume = (100 - crossfader.value) / 100;
-    const groupBVolume = crossfader.value / 100;
+    // Calculer les volumes avec un minimum de 1% pour maintenir la détection audio
+    const fadeValue = crossfader.value / 100;
+    const groupAVolume = Math.max(0.01, 1 - fadeValue); // Minimum 1%
+    const groupBVolume = Math.max(0.01, fadeValue);     // Minimum 1%
 
     groupA.forEach(tab => {
       chrome.scripting.executeScript({
